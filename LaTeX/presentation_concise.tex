@@ -1,0 +1,202 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+
+\title{Analisi Prezzi Aeromobili}
+\subtitle{Modelli Lineari per la Predizione del Prezzo}
+\author{Statistical Learning Project}
+\date{\today}
+
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% 1. Introduzione a dataset
+\begin{frame}{Introduzione al Dataset}
+\begin{itemize}
+    \item \textbf{Dataset}: Prezzi di aeromobili
+    \item \textbf{Dimensioni}: 507 osservazioni, 16 variabili
+    \item \textbf{Target}: Price (USD)
+    \item \textbf{Fonte}: Dati reali di mercato aeronautico
+\end{itemize}
+
+\vspace{1cm}
+\begin{center}
+\textbf{Obiettivo}: Predire il prezzo degli aeromobili utilizzando caratteristiche tecniche
+\end{center}
+\end{frame}
+
+% 2. Features e obiettivi
+\begin{frame}{Features e Obiettivi}
+\textbf{Variabili Principali:}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+    \item cruise\_speed
+    \item max\_speed  
+    \item fuel\_tank
+    \item engine\_power
+    \item wing\_span
+    \item landing\_distance
+    \item empty\_weight
+    \item range
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+    \item manufacturer
+    \item engine\_type
+    \item aircraft\_type
+    \item cockpit\_type
+    \item fuel\_type
+    \item category
+    \item seating\_capacity
+    \item \textcolor{red}{\textbf{price}} (target)
+\end{itemize}
+\end{column}
+\end{columns}
+
+\vspace{0.5cm}
+\textbf{Obiettivo}: Costruire un modello lineare multiplo per predire il prezzo
+\end{frame}
+
+% 3. Grafici plot rispetto a price
+\begin{frame}{Relazioni con il Prezzo}
+\begin{center}
+\textbf{Scatter Plots delle Variabili Numeriche vs Price}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Correlazioni positive forti}:
+    \begin{itemize}
+        \item cruise\_speed vs price
+        \item max\_speed vs price
+        \item fuel\_tank vs price
+        \item engine\_power vs price
+    \end{itemize}
+    \item \textbf{Relazioni non lineari evidenti}
+    \item \textbf{Presenza di outliers} nei dati
+\end{itemize}
+\end{frame}
+
+% 4. Plot distribuzioni
+\begin{frame}{Distribuzioni delle Variabili}
+\textbf{Analisi delle Distribuzioni:}
+
+\begin{itemize}
+    \item \textbf{Price}: Fortemente asimmetrica a destra
+    \item \textbf{Fuel\_tank}: Distribuzione skewed
+    \item \textbf{Engine\_power}: Asimmetria positiva
+    \item \textbf{Landing\_distance}: Skewness elevata
+    \item \textbf{Empty\_weight}: Coda lunga a destra
+    \item \textbf{Range}: Distribuzione non normale
+    \item \textbf{Wing\_span}: Asimmetria moderata
+\end{itemize}
+
+\vspace{0.5cm}
+\textcolor{red}{\textbf{Problema}}: Le distribuzioni non normali violano le assunzioni del modello lineare
+\end{frame}
+
+% 5. Heatmap
+\begin{frame}{Heatmap Correlazioni}
+\begin{center}
+\textbf{Matrice di Correlazione - Dati Originali}
+\end{center}
+
+\textbf{Correlazioni Elevate:}
+\begin{itemize}
+    \item price - cruise\_speed: 0.85
+    \item price - max\_speed: 0.82
+    \item price - fuel\_tank: 0.89
+    \item price - engine\_power: 0.91
+    \item landing\_distance - engine\_power: 0.95 (\textcolor{red}{multicollinearità})
+\end{itemize}
+
+\vspace{0.5cm}
+\textcolor{orange}{\textbf{Evidenza di multicollinearità}} tra alcune variabili
+\end{frame}
+
+% 6. Log Trasformazione e plot distribuzioni
+\begin{frame}{Trasformazione Logaritmica}
+\textbf{Variabili Trasformate con Log:}
+\begin{itemize}
+    \item price → log(price)
+    \item fuel\_tank → log(fuel\_tank)
+    \item engine\_power → log(engine\_power)
+    \item landing\_distance → log(landing\_distance)
+    \item empty\_weight → log(empty\_weight)
+    \item range → log(range)
+    \item wing\_span → log(wing\_span)
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Risultato}: Distribuzioni più simmetriche e normali
+\end{frame}
+
+% 7. Heatmap post-log
+\begin{frame}{Heatmap Post-Trasformazione}
+\begin{center}
+\textbf{Matrice di Correlazione - Dati Log-Trasformati}
+\end{center}
+
+\textbf{Miglioramenti:}
+\begin{itemize}
+    \item Correlazioni più lineari
+    \item Riduzione della multicollinearità
+    \item Relazioni più stabili
+    \item Distribuzioni normalizzate
+\end{itemize}
+
+\vspace{0.5cm}
+\textcolor{green}{\textbf{Beneficio}}: Assunzioni del modello lineare meglio soddisfatte
+\end{frame}
+
+% 8. Modello multiplo lineare
+\begin{frame}{Modello Lineare Multiplo}
+\textbf{Performance del Modello:}
+\begin{itemize}
+    \item \textbf{R²}: 0.865 (86.5\% varianza spiegata)
+    \item \textbf{RMSE}: \$382,447
+    \item \textbf{Variabili significative}: 10/13 (p < 0.05)
+\end{itemize}
+
+\textbf{Cross-Validation:}
+\begin{itemize}
+    \item Train/Test Split (80-20): R² = 0.849
+    \item 10-Fold CV: R² = 0.84-0.86
+\end{itemize}
+
+\textbf{Variabili Non Significative:}
+\begin{itemize}
+    \item aircraft\_type\_Light
+    \item engine\_type\_Turbo-prop  
+    \item manufacturer\_Cessna
+    \item manufacturer\_Piper
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusioni}
+\begin{center}
+\textbf{Risultati Principali}
+\end{center}
+
+\begin{itemize}
+    \item \textcolor{green}{\textbf{Modello robusto}} con R² = 86.5\%
+    \item \textcolor{green}{\textbf{Cross-validation}} conferma stabilità
+    \item \textcolor{blue}{\textbf{Trasformazione logaritmica}} essenziale
+    \item \textcolor{orange}{\textbf{Multicollinearità}} ancora presente
+\end{itemize}
+
+\vspace{1cm}
+\begin{center}
+\textbf{Il modello lineare multiplo è efficace per la predizione dei prezzi degli aeromobili}
+\end{center}
+\end{frame}
+
+\end{document}
