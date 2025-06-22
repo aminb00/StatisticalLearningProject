@@ -1,6 +1,0 @@
-\babel@toc {italian}{}\relax 
-\babel@toc {italian}{}\relax 
-\beamer@sectionintoc {1}{Introduzione al Progetto}{3}{0}{1}
-\beamer@sectionintoc {2}{Data Preparation}{4}{0}{2}
-\beamer@sectionintoc {3}{Linear Models}{8}{0}{3}
-\beamer@sectionintoc {4}{Risultati e Conclusioni}{14}{0}{4}

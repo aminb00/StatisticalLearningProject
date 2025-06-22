@@ -1,9 +1,0 @@
-\frametitle{K-Fold CV Metrics (Full)}
-\begin{verbatim}
-=== K-Fold CV Metrics ===
-R^2 mean = 0.8282 ± 0.0585
-MSE mean = 0.0275 ± 0.0080
-
-RMSE (de-logged) = 391503.27 ± 0.0080
-\end{verbatim}
-\small{Inferential summary aggregated over the 10 training folds is shown in the next slide.}
