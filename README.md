@@ -62,6 +62,9 @@ The original features showed significant skewness, requiring log transformation 
 | Lasso | $376,000 | 0.8494 | Feature selection |
 | Linear Regression | $389,179 | 0.8421 | Baseline |
 
+### Model Performance Visualization
+![Model Performance Comparison](LaTeX/images/TreesRMSE&RsquaredComparison.png)
+
 ## 📋 Key Findings
 
 - **Best Predictor:** Bagging (Extra Trees) achieves lowest RMSE with highest R²
@@ -69,6 +72,16 @@ The original features showed significant skewness, requiring log transformation 
 - **Interpretability vs Accuracy:** GAM offers best balance between performance and explainability
 - **Feature Selection:** Lasso eliminates non-significant features while maintaining performance
 - **Log Transformation:** Critical preprocessing step that improved all models
+
+### Feature Importance Analysis
+Consistent feature importance across different model types reveals key value drivers:
+
+![Feature Importance Across Models](LaTeX/images/FeatureImportanceTreeModels.png)
+
+### GAM Partial Dependence Analysis
+Generalized Additive Models reveal non-linear relationships between features and aircraft prices:
+
+![GAM Partial Dependence Plots](LaTeX/images/GAM1.png)
 
 ## 🚀 Project Structure
 
@@ -92,6 +105,11 @@ The original features showed significant skewness, requiring log transformation 
 - **Preprocessing:** Log transformation for skewed variables
 - **Feature Engineering:** Polynomial terms, spline bases
 - **Model Selection:** Grid search with cross-validation
+
+### Model Validation & Residual Analysis
+Comprehensive residual analysis ensures model validity:
+
+![Residual Analysis](LaTeX/images/ResidualsGAM.png)
 
 ## 📖 References
 
